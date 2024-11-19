@@ -1,53 +1,50 @@
 const arrayOfString = ["cook", "save", "taste", "aves", "vase", "state", "map"];
 
-// [a, a]
-// aab -> a || a ->
-// abc
+function sortingWord(word) {
+    let wordArray = [];
 
-function compareWords(firstWord, secondWord) {
+    for (let i = 0; i < word.length; i++) {
+        wordArray.push(word[i]);
+    }
 
-    if (firstWord.length !== secondWord.length) return false;
-
-    let temp = [];
-
-    let result = false;
-
-    for (let i = 0; i < firstWord.length; i++) {
-        for (let j = 0; j < secondWord.length; j++) {
-            if (firstWord[i] === secondWord[j]) {
-                temp.push(firstWord[i]);
+    for (let i = 0; i < word.length; i++) {
+        for (let j = 0; j < word.length; j++) {
+            if (wordArray[j] > wordArray[j + 1]) {
+                const temp = wordArray[j];
+                wordArray[j] = wordArray[j + 1];
+                wordArray[j + 1] = temp;
             }
         }
     }
 
-    return temp;
+    return wordArray.join("");
 }
 
-function generateAnagrams() {
+function generateAnagrams(arrayOfWords) {
     const result = [];
 
     let count = 0;
 
-    for (let i = 0; i < arrayOfString.length; i++) {
-        const temp = []
+    for (let i = 0; i < arrayOfWords.length; i++) {
+        const temp = [];
+        temp.push(arrayOfWords[i]);
 
-        for (let j = count; j < arrayOfString.length; j++) {
-            if (arrayOfString[i].length !== arrayOfString[j].length) continue;
+        for (let j = i + 1; j < arrayOfWords.length; j++) {
+            if (arrayOfWords[i].length !== arrayOfWords[j].length) continue;
 
-            temp.push(arrayOfString[j]);
+            if (sortingWord(arrayOfWords[i]) === sortingWord(arrayOfWords[j])) {
+                temp.push(arrayOfWords[j]);
+                arrayOfWords[j] = "";
+            }
         }
 
+        if (arrayOfWords[i] === "") continue;
         result.push(temp);
-
         count++;
     }
 
     return result;
 }
 
-// const result = generateAnagrams();?
-// console.log(result);
-//
-console.log(compareWords("avea", "vase"));
-//
-// console.log(sortingWord("abac"))
+console.log(generateAnagrams(arrayOfString))
+
