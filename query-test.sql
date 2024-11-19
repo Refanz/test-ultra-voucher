@@ -1,0 +1,1 @@
+SELECT id, name, (SELECT name FROM tb_people p2 WHERE p1.parent_id = p2.id) AS parent_name FROM tb_people p1;
